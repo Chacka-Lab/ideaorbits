@@ -5,3 +5,7 @@
 # License
 
 AGPL-3.0
+
+---
+
+Ideals stem from ideas.
