@@ -1,0 +1,36 @@
+# deps
+node_modules/
+
+# misc
+.DS_Store
+.idea/
+.claude/
+
+# debug
+.pnpm-debug.log*
+
+# env
+.env
+
+# typescript
+*.tsbuildinfo
+
+# generated
+.nitro/
+.output/
+.solid-start/
+/.drizzle/
+
+# dev
+eslint.config.*
+/scripts/
+Dockerfile
+.dockerignore
+.prettierrc
+.prettierignore
+.gitignore
+
+# text
+README.md
+LICENSE
+/docs/

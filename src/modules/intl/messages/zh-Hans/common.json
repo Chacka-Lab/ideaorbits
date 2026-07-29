@@ -1,0 +1,10 @@
+{
+  "HomePage": {
+    "title": "Hello world",
+    "description": "这是一个Demo"
+  },
+  "User": {
+    "login": "登录",
+    "logout": "登出"
+  }
+}

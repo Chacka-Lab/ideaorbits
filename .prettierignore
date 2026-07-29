@@ -1,0 +1,23 @@
+# deps
+node_modules/
+
+# misc
+.DS_Store
+.idea/
+.claude/
+
+# debug
+.pnpm-debug.log*
+
+# typescript
+*.tsbuildinfo
+
+# generated
+.nitro/
+.output/
+.solid-start/
+/.drizzle/
+pnpm-lock.yaml
+
+# res
+/public/

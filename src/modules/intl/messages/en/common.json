@@ -1,0 +1,10 @@
+{
+  "HomePage": {
+    "title": "Hello world",
+    "description": "This is a demo"
+  },
+  "User": {
+    "login": "Login",
+    "logout": "Logout"
+  }
+}
