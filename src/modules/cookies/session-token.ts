@@ -10,8 +10,7 @@ export function set(token: Buffer) {
   setCookie(keyNames.sessionToken, token.toString('base64url'), {
     httpOnly: true,
     secure: true,
-    sameSite: 'lax',
-    path: '/',
+    sameSite: 'strict',
     maxAge: MAX_TTL,
   });
 }

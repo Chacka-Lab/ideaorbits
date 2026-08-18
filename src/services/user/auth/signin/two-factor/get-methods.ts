@@ -47,7 +47,7 @@ export async function getMethods(twoFactorToken: Buffer): Promise<GetMethodsResu
 
     return { success: true, data: arr };
   } catch (e) {
-    logger.error('two-factor/get-methods error:', e);
+    logger.error('two-factor:get-methods error:', e);
     return { success: false, message: 'internalError' };
   }
 }

@@ -10,3 +10,11 @@ export const CONSTR_NAMES = {
   userOAuthPk: 'pk_user_oauth',
   userWebAuthnPk: 'pk_user_webauthn',
 } as const;
+
+export const globalSettingsIndex = p.pgEnum('global_ettings_index', ['00']);
+
+export const globalSettings = mainSchema.table('global_settings', {
+  id: globalSettingsIndex('id').primaryKey(),
+  // Idea
+  ignitionThreshold: p.bigint({ mode: 'bigint' }).notNull(),
+});

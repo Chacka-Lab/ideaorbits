@@ -1,7 +1,7 @@
 import { solidStart } from '@solidjs/start/config';
-import { nitroV2Plugin as nitro } from '@solidjs/vite-plugin-nitro-2';
 import tailwindcss from '@tailwindcss/vite';
 import { config } from 'dotenv';
+import { nitro } from 'nitro/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig(({ mode }) => {
@@ -13,15 +13,14 @@ export default defineConfig(({ mode }) => {
   return {
     envPrefix: 'PUBLIC_',
 
+    optimizeDeps: {
+      include: ['source-map-js', 'error-stack-parser', 'stackframe'],
+    },
+
     plugins: [
       solidStart(),
       nitro({
         preset: 'node_server',
-        esbuild: {
-          options: {
-            target: 'ES2022',
-          },
-        },
       }),
       tailwindcss(),
     ],

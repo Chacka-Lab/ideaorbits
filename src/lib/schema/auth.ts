@@ -15,7 +15,7 @@ export const webauthnTransports = p.pgEnum('webauthn_transports', [
 ]);
 
 export const userPasswords = mainSchema.table('user_passwords', {
-  userId: p.uuid('user_id').notNull().primaryKey(),
+  userId: p.uuid('user_id').primaryKey(),
   passwordHash: p.bytea('password_hash').notNull(),
   createdAt: p.timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   lastUsedAt: p.timestamp('last_used_at', { withTimezone: true }),
@@ -24,8 +24,8 @@ export const userPasswords = mainSchema.table('user_passwords', {
 export const userOAuth = mainSchema.table(
   'user_oauth',
   {
-    userId: p.uuid('user_id').notNull(),
-    provider: oauthProvider('provider').notNull(),
+    userId: p.uuid('user_id'),
+    provider: oauthProvider('provider'),
     providerUid: p.text('provider_uid').notNull(),
     createdAt: p.timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
     lastUsedAt: p.timestamp('last_used_at', { withTimezone: true }),
@@ -41,7 +41,7 @@ export const userOAuth = mainSchema.table(
  * Before executing DML, the corresponding user's RecoveryKeys must be locked.
  */
 export const userTotps = mainSchema.table('user_totps', {
-  userId: p.uuid('user_id').notNull().primaryKey(),
+  userId: p.uuid('user_id').primaryKey(),
   encryptedSecret: p.bytea('encrypted_secret').notNull(),
   createdAt: p.timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   lastUsedAt: p.timestamp('last_used_at', { withTimezone: true }),
@@ -52,7 +52,7 @@ export const userTotps = mainSchema.table('user_totps', {
  * Before executing DML, the corresponding user's RecoveryKeys must be locked.
  */
 export const userPasskeys = mainSchema.table('user_passkeys', {
-  id: p.text('id').notNull().primaryKey(),
+  id: p.text('id').primaryKey(),
   userId: p.uuid('user_id').notNull(),
   publicKey: p.bytea('public_key').notNull(),
   counter: p.bigint('counter', { mode: 'number' }).notNull().default(0),
@@ -68,7 +68,7 @@ export const userPasskeys = mainSchema.table('user_passkeys', {
  * Before executing DML, the corresponding user's RecoveryKeys must be locked.
  */
 export const userRecoveryKeys = mainSchema.table('user_recovery_keys', {
-  userId: p.uuid('user_id').notNull().primaryKey(),
+  userId: p.uuid('user_id').primaryKey(),
   keyHash: p.bytea('key_hash').notNull(),
   createdAt: p.timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 });

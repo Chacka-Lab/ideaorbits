@@ -7,7 +7,7 @@ const routes = {
     notFound: '/not-found',
     showError: '/show-error',
     auth: {
-      signIn: '/sign-in',
+      signIn: '/signin',
       // complete
       signupEmailComplete: '/signup/complete/email',
       signupOAuthComplete: '/signup/complete/oauth',

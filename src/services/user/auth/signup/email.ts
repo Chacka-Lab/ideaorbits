@@ -88,7 +88,7 @@ export async function request(input: RequestInput): Promise<RequestResult> {
 
     return { success: true };
   } catch (e) {
-    logger.error('email/request error:', e);
+    logger.error('email:request error:', e);
     return { success: false, message: 'internalError' };
   }
 }
@@ -111,7 +111,7 @@ export async function exchangeCode(code: string): Promise<ExchangeCodeResult> {
     if (!token) return { success: false, message: 'invalidCode' };
     return { success: true, token };
   } catch (e) {
-    logger.error('email/exchangeCode error:', e);
+    logger.error('email:exchangeCode error:', e);
     return { success: false, message: 'internalError' };
   }
 }
@@ -121,7 +121,7 @@ export async function exchangeCode(code: string): Promise<ExchangeCodeResult> {
 type GetPayloadResult =
   | {
       success: true;
-      data: Awaited<ReturnType<typeof emailVerification.getPayload>>;
+      data: emailVerification.Payload;
     }
   | {
       success: false;
@@ -130,11 +130,11 @@ type GetPayloadResult =
 
 export async function getPayload(token: Buffer): Promise<GetPayloadResult> {
   try {
-    const res = await emailVerification.getPayload(token, 'signup');
+    const res = await emailVerification.verifyToken(token, 'signup');
     if (!res) return { success: false, message: 'invalidToken' };
     return { success: true, data: res };
   } catch (e) {
-    logger.error('email/getPayload error:', e);
+    logger.error('email:getPayload error:', e);
     return { success: false, message: 'internalError' };
   }
 }
@@ -187,7 +187,7 @@ export async function complete(
     if (!tokenRes) return { success: false, message: 'invalidToken' };
     payload = basic.displayNameSchema.parse(JSON.parse(tokenRes.payload));
   } catch (e) {
-    logger.error('email/complete error:', e);
+    logger.error('email:complete error:', e);
     return { success: false, message: 'internalError' };
   }
 
@@ -220,7 +220,7 @@ export async function complete(
         return { success: false, fieldErrors: { email: 'emailTaken' } };
       }
     }
-    logger.error('email/complete error:', e);
+    logger.error('email:complete error:', e);
     return { success: false, message: 'internalError' };
   }
 }

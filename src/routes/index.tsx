@@ -1,14 +1,16 @@
 import { Title } from '@solidjs/meta';
+import { createAsync } from '@solidjs/router';
 
-import { useIntl } from '~/modules/intl/context';
+import { verifyCookieToken } from '~/functions/user/auth/session';
 
 export default function Home() {
-  useIntl();
+  const session = createAsync(() => verifyCookieToken()).latest;
+
   return (
     <main>
       <Title>Hello World</Title>
       <h1>Hello world!</h1>
-      <p>歌唱吧，青春留尾巴……</p>
+      <p>{session?.success ? session.data.user.username : 'none'}</p>
     </main>
   );
 }

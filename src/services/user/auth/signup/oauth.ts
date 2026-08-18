@@ -54,7 +54,7 @@ export async function handleCallback(
 
     return { success: true, token };
   } catch (e) {
-    logger.error('oauth/handleCallback error:', e);
+    logger.error('oauth:handleCallback error:', e);
     return { success: false, message: 'internalError' };
   }
 }
@@ -73,11 +73,11 @@ type GetPayloadResult =
 
 export async function getPayload(token: Buffer): Promise<GetPayloadResult> {
   try {
-    const res = await oauthSignupPending.getPayload(token);
+    const res = await oauthSignupPending.verifyToken(token);
     if (!res) return { success: false, message: 'invalidToken' };
     return { success: true, data: res };
   } catch (e) {
-    logger.error('oauth/getPayload error:', e);
+    logger.error('oauth:getPayload error:', e);
     return { success: false, message: 'internalError' };
   }
 }
@@ -122,10 +122,10 @@ export async function complete(
   // Consume token
   let payload;
   try {
-    payload = await oauthSignupPending.getPayload(token);
+    payload = await oauthSignupPending.verifyToken(token);
     if (!payload) return { success: false, message: 'invalidToken' };
   } catch (e) {
-    logger.error('oauth/complete error:', e);
+    logger.error('oauth:complete error:', e);
     return { success: false, message: 'internalError' };
   }
 
@@ -164,7 +164,7 @@ export async function complete(
         return { success: false, fieldErrors: { email: 'emailTaken' } };
       }
     }
-    logger.error('oauth/complete error:', e);
+    logger.error('oauth:complete error:', e);
     return { success: false, message: 'internalError' };
   }
 }

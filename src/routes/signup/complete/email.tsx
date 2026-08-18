@@ -21,7 +21,7 @@ const getSignupState = query(async () => {
   if (!token) return null;
 
   const res = await emailSignup.getPayload(token);
-  if (!res.success || !res.data) return null;
+  if (!res.success) return null;
 
   // Return only serializable data (no Buffer over the wire)
   const payload = JSON.parse(res.data.payload) as { displayName?: string };

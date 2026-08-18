@@ -112,7 +112,7 @@ export async function auth(userId: string, token: string): Promise<AuthResult> {
         .set({ encryptedSecret: newEncryptedSecret })
         .where(eq(userTotps.userId, userId));
     }).catch((e) => {
-      logger.warn('auth/totp error:', e);
+      logger.warn('auth:totp error:', e);
     });
   }
 

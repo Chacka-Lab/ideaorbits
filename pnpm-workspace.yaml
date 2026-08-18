@@ -1,6 +1,6 @@
 engineStrict: true
 
-minimumReleaseAge: 1440
+minimumReleaseAge: 0
 minimumReleaseAgeIgnoreMissingTime: false
 
 allowBuilds:

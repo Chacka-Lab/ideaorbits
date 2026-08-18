@@ -47,7 +47,7 @@ export async function createToken(payload: Payload): Promise<Token> {
   return secret;
 }
 
-export async function getPayload(token: Token): Promise<Payload | null> {
+export async function verifyToken(token: Token): Promise<Payload | null> {
   const res = await redis.get(keyNames.oauthSignupToken(hashSecret(token)));
   if (!res) return null;
   return payloadSchema.parse(JSON.parse(res));

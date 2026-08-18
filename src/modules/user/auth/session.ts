@@ -2,7 +2,6 @@ import 'server-only';
 
 import { randomBytes } from 'node:crypto';
 
-import { query } from '@solidjs/router';
 import { desc, eq, inArray, lt, sql } from 'drizzle-orm';
 import { pack, unpack } from 'msgpackr';
 import { z } from 'zod';
@@ -71,7 +70,7 @@ export async function create(userId: string): Promise<SessionToken> {
 
 // ===== Verify =====
 
-export interface SessionPayload {
+export interface Session {
   user: {
     id: string;
     displayName: string;
@@ -84,20 +83,7 @@ export interface SessionPayload {
   expiresAt: Date;
 }
 
-class Session {
-  readonly #session: SessionPayload;
-
-  constructor(session: SessionPayload) {
-    this.#session = session;
-  }
-
-  get(): SessionPayload {
-    return this.#session;
-  }
-}
-export type { Session };
-
-export const verify = query(async (token: Buffer): Promise<Session | null> => {
+export async function verify(token: Buffer): Promise<Session | null> {
   const parsed = tokenPayloadSchema.safeParse(unpack(token));
   if (!parsed.success) return null;
 
@@ -113,9 +99,7 @@ export const verify = query(async (token: Buffer): Promise<Session | null> => {
     // Concurrently, clean up
     db.delete(userSessions)
       .where(eq(userSessions.id, session.id))
-      .catch((e) => {
-        logger.warn('session/verify failed to delete session:', e);
-      });
+      .catch((e) => logger.warn('session:verify failed to clean session:', e));
     return null;
   }
 
@@ -123,13 +107,13 @@ export const verify = query(async (token: Buffer): Promise<Session | null> => {
     return null;
   }
 
-  return new Session({
+  return {
     user: session.user,
     sessionId: session.id,
     createdAt: session.createdAt,
     expiresAt: session.expiresAt,
-  });
-}, 'sessionVerify');
+  };
+}
 
 // ===== Revoke =====
 

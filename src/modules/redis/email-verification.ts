@@ -20,7 +20,7 @@ const payloadSchema = z.object({
   ...emailSchema.shape,
   payload: z.string(),
 });
-type Payload = z.infer<typeof payloadSchema>;
+export type Payload = z.infer<typeof payloadSchema>;
 
 const packageSchema = z.object({
   // There is an email field, encryption is necessary
@@ -113,7 +113,7 @@ export async function exchangeCode(
   return null;
 }
 
-export async function getPayload(token: Token, flow: Flow): Promise<Payload | null> {
+export async function verifyToken(token: Token, flow: Flow): Promise<Payload | null> {
   // token
   const tokenPayload = decodePackage(token);
   if (!tokenPayload) return null;

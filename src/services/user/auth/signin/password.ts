@@ -71,7 +71,7 @@ export async function request(input: RequestInput): Promise<RequestResult> {
         : await session.create(user.id),
     };
   } catch (e) {
-    logger.error('login/password error:', e);
+    logger.error('login:password error:', e);
     return { success: false, message: 'internalError' };
   }
 }
